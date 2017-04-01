@@ -16,5 +16,8 @@ body {
 }
 
 #main {
+  overflow: hidden;
+  min-height: 100%;
+  height: 400%;
   background-color: gray;
 }
