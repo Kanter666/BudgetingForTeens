@@ -7,8 +7,8 @@ function login(){
 	document.getElementById("botton").innerHTML = "Hello World";
 }
 
-var   w = 1000,
-      h =  800,
+var   w = screen.availWidth,
+      h =  screen.availHeight,
       circleWidth = 5; 
  
 
@@ -23,37 +23,37 @@ var colors = d3.scale.category20();
 
 var nodes = [
       { name: "Skills"},
-      { name: "HTML5", target: [0], value: 58 },
-      { name: "CSS3", target: [0, 1], value: 65 },  
-      { name: "Scss", target: [0, 1, 2], value: 52 },
-      { name: "Compass", target: [0, 3], value: 48 }, 
-      { name: "Susy", target: [0,3,4], value: 40 }, 
-      { name: "Breakpoints", target: [0,3,4,5], value: 36 },
-      { name: "jQuery", target: [0, 1, 2], value: 52 },
-      { name: "Javascript", target: [0, 1, 2, 8], value: 37 },
-      { name: "PHP", target: [0,1,2], value: 20 },
-      { name: "Wordpress", target: [0,1,2,3,9], value: 67 },
-      { name: "Git", target: [0,1,2,3,4,5,6,7,8,10], value: 68 },
-      { name: "Snap.svg", target: [0,1,2,7,8 ], value: 16 },
-      { name: "d3", target: [0,1,2,7,8], value: 25 },
-      { name: "Gulp", target: [0,1,2,3,4,5,6,7,8,9,10,11,12], value: 45 },
-      { name: "Angular", target: [0,1,2,7,8], value: 25 },
-      { name: "Adobe CS", target: [0,1,2,12], value: 57 },
-      { name: "mySql", target: [0,9,10], value: 20 },
-      { name: "Grunt", target: [0,9,10], value: 37 },
+      { name: "amazing", target: [], value: 58 },
+      { name: "is", target: [], value: 165 },  
+      { name: "Scss", target: [], value: 52 },
+      { name: "Compass", target: [], value: 48 }, 
+      { name: "Susy", target: [], value: 40 }, 
+      { name: "Breakpoints", target: [], value: 36 },
+      { name: "jQuery", target: [], value: 52 },
+      { name: "Javascript", target: [], value: 37 },
+      { name: "PHP", target: [], value: 20 },
+      { name: "Wordpress", target: [], value: 67 },
+      { name: "Adam", target: [], value: 68 },
+      { name: "Snap.svg", target: [], value: 16 },
+      { name: "d3",  target: [], value: 25 },
+      { name: "Gulp", target: [], value: 45 },
+      { name: "Angular", target: [], value: 25 },
+      { name: "Adobe CS", target: [], value: 57 },
+      { name: "mySql", target: [], value: 20 },
+      { name: "Grunt", target: [], value: 37 },
 ];
 
-var links = [];
+var button = document.createElement("button");
+button.innerHTML = "add circle!";
 
-for (var i = 0; i < nodes.length; i++){
-      if (nodes[i].target !== undefined) { 
-            for ( var x = 0; x < nodes[i].target.length; x++ ) 
-              links.push({
-                  source: nodes[i],
-                  target: nodes[nodes[i].target[x]]  
-              });
-      };
-};
+button.addEventListener("click", function() {
+  nodes.push({ name: "JOHN CENNA", target: [], value: 158 });
+   force.start();
+});
+
+document.body.appendChild(button);
+
+var links = [];
 
 
 var myChart = d3.select('body')
@@ -62,16 +62,16 @@ var myChart = d3.select('body')
       
       .append('svg')
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 1000 800")
+        .attr("viewBox", "0 0 "+w+" "+(h-70)+" ")
         .classed("svg-content-responsive", true)
 
 
 var force = d3.layout.force()
-      .nodes(nodes)
+	  .nodes(nodes)
       .links([])
-      .gravity(0.1)
+      .gravity(0.3)
       .charge(-1000)
-      .size([w,h]); 
+      .size([w,h]); //sets centre of gravity
 
       var link = myChart.selectAll('line') 
             .data(links).enter().append('line')
@@ -149,9 +149,9 @@ var force = d3.layout.force()
             })
             .attr('font-size', function(d, i){
                   if (i > 0) {
-                        return '.8em';
+                        return '1.3em';
                   } else {
-                        return '.9em';    
+                        return '1.5em';    
                   }
             }) 
 
