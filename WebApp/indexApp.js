@@ -48,7 +48,8 @@ button.innerHTML = "add circle!";
 
 button.addEventListener("click", function() {
   nodes.push({ name: "JOHN CENNA", target: [], value: 158 });
-   force.start();
+  update();
+
 });
 
 document.body.appendChild(button);
@@ -65,6 +66,7 @@ var myChart = d3.select('body')
         .attr("viewBox", "0 0 "+w+" "+(h-70)+" ")
         .classed("svg-content-responsive", true)
 
+        .style("background-color", "black")
 
 var force = d3.layout.force()
 	  .nodes(nodes)
@@ -73,12 +75,17 @@ var force = d3.layout.force()
       .charge(-1000)
       .size([w,h]); //sets centre of gravity
 
-      var link = myChart.selectAll('line') 
+      var link;
+
+      var node; 
+
+var update = function () {
+      link = myChart.selectAll('line') 
             .data(links).enter().append('line')
             .attr('stroke', palette.lightgray)
             .attr('strokewidth', '1');
 
-      var node =  myChart.selectAll('circle')  
+      node =  myChart.selectAll('circle')  
             .data(nodes).enter() 
             .append('g') 
             .call(force.drag); 
@@ -102,20 +109,6 @@ var force = d3.layout.force()
                         return '#fff';
                   }
             })
-            .attr('strokewidth', function(d,i){
-                  if ( i > 0 ) {
-                        return '0';
-                  } else {
-                        return '2';
-                  }
-            })
-            .attr('stroke', function(d,i){
-                  if ( i > 0 ) {
-                        return '';
-                  } else {
-                        return 'black';
-                  }
-            });
 
 
       force.on('tick', function(e){ 
@@ -154,5 +147,10 @@ var force = d3.layout.force()
                         return '1.5em';    
                   }
             }) 
+          force
+	      .nodes(nodes)
+	      .links(links)
+	      .start();
+        }
 
-force.start();
+update();
