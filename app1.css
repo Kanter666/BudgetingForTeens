@@ -23,6 +23,13 @@ h1 {
 	font-size: 16px;
 }
 
+#payment
+{
+	width: 98%;
+	padding: 9px;
+	font-size: 16px;
+}
+
 #send
 {
 	width: 40%;

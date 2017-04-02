@@ -40,25 +40,31 @@ function saveToFB(userName, passWord){
 function confirmStuff(){
 	var budget = document.getElementById("budget").value.trim();
 	var category = document.getElementById("category").value.trim();
+	var payment = document.getElementById("payment").value.trim();
 	if (budget.length!=0 && category.length!=0){
 		var user = firebase.auth().currentUser;
 		auth.child("users").child(user.uid).push({
 			budget: budget,
 			category: category
+			payment: payment
 		})
 	}
-	budget = document.getElementById("budget").value = "";
-	category = document.getElementById("category").value = "";
+	document.getElementById("budget").value = "";
+	document.getElementById("category").value = "";
+	document.getElementById("payment").value = "";
+	fetchShit();
 }
 
 function fetchShit(){
 	var rootref = firebase.database().ref();
-	var shit = rootref.child("users/UpOKas4N6UT4IekltDA2AtYyW2u2")
+	var userID = firebase.auth().currentUser.uid;
+	var shit = rootref.child("users/"+userID);
 	shit.once("value", function(snapshot){
 		snapshot.forEach(function(child){
-			console.log(child.key+": "+child.child("budget").val());
+			console.log("Budget: "+child.child("budget").val());
+			console.log("Category: "+child.child("category").val());
+			console.log("Payment: "+child.child("payment").val());
 		})
 	})
 }
 
-fetchShit();
