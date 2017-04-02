@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="app.css">
+</head>
+ 
+<body>
+    <h1>Create Username and Password</h1>
+    <hr />
+    <input type="text" id="name" placeholder="Name"/>
+    <input type="text" id="user" placeholder="Username"/>
+    <input type="text" id="pass" placeholder="Password"/>
+    <p></p>
+    <button type="button" id="submit" onclick="saveToList()">Submit</button>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA2cFeeTXu2I_uw4ETo9cq37D6nHcdw_HE",
+    authDomain: "teenbudget-75e27.firebaseapp.com",
+    databaseURL: "https://teenbudget-75e27.firebaseio.com",
+    projectId: "teenbudget-75e27",
+    storageBucket: "teenbudget-75e27.appspot.com",
+    messagingSenderId: "946643592430"
+  };
+  firebase.initializeApp(config);
+</script>
+    <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+ 
+</html>
