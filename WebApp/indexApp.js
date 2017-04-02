@@ -43,11 +43,21 @@ var nodes = [
       { name: "Grunt", target: [], value: 37 },
 ];
 
+
+
 var button = document.createElement("button");
 button.innerHTML = "add circle!";
 
 button.addEventListener("click", function() {
-  nodes.push({ name: "JOHN CENNA", target: [], value: 158 });
+  nodes.forEach( function (arrayItem)
+  {
+    delete arrayItem.x;
+    delete arrayItem.y;
+    delete arrayItem.px;
+    delete arrayItem.py;
+  });
+  nodes.push({ name: "JOHN CENNA", target: [], value: 58 });
+  button.innerHTML = JSON.stringify(nodes);
   update();
 
 });
@@ -79,7 +89,34 @@ var force = d3.layout.force()
 
       var node; 
 
-var update = function () {
+      force.on('tick', function(e){ 
+            node.attr('transform', function(d, i){
+              return 'translate(' + (circleWidth +d.x) + ','+ (circleWidth +d.y) + ')'
+            })
+
+          link 
+              .attr('x1', function(d){ return d.source.x; }) 
+              .attr('y1', function(d){ return d.source.y; })
+              .attr('x2', function(d){ return d.target.x; })
+              .attr('y2', function(d){ return d.target.y; })
+      });
+
+var update = function () { 
+
+	  d3.select("div").remove();
+	  d3.select("svg").remove();
+	  myChart = d3.select('body')
+      .append("div")
+        .classed("svg-container", true)
+      
+      .append('svg')
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 "+w+" "+(h-70)+" ")
+        .classed("svg-content-responsive", true)
+
+        .style("background-color", "black")
+
+
       link = myChart.selectAll('line') 
             .data(links).enter().append('line')
             .attr('stroke', palette.lightgray)
@@ -111,17 +148,7 @@ var update = function () {
             })
 
 
-      force.on('tick', function(e){ 
-            node.attr('transform', function(d, i){
-              return 'translate(' + d.x + ','+ d.y + ')'
-            })
-
-          link 
-              .attr('x1', function(d){ return d.source.x; }) 
-              .attr('y1', function(d){ return d.source.y; })
-              .attr('x2', function(d){ return d.target.x; })
-              .attr('y2', function(d){ return d.target.y; })
-      });
+      
 
 
       node.append('text')
@@ -148,8 +175,6 @@ var update = function () {
                   }
             }) 
           force
-	      .nodes(nodes)
-	      .links(links)
 	      .start();
         }
 
