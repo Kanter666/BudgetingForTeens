@@ -4,7 +4,10 @@ function registerWindow(){
 }
 
 function login(){
-	document.getElementById("botton").innerHTML = "Hello World";
+	loginBar = document.getElementById("navbar");
+	loginBar.remove();
+	document.getElementById("welcome").style.display="block";
+	update();
 }
 
 var   w = screen.availWidth,
@@ -22,31 +25,25 @@ var palette = {
 var colors = d3.scale.category20();
 
 var nodes = [
-      { name: "Skills"},
-      { name: "amazing", target: [], value: 58 },
-      { name: "is", target: [], value: 165 },  
-      { name: "Scss", target: [], value: 52 },
-      { name: "Compass", target: [], value: 48 }, 
-      { name: "Susy", target: [], value: 40 }, 
-      { name: "Breakpoints", target: [], value: 36 },
-      { name: "jQuery", target: [], value: 52 },
-      { name: "Javascript", target: [], value: 37 },
-      { name: "PHP", target: [], value: 20 },
-      { name: "Wordpress", target: [], value: 67 },
-      { name: "Adam", target: [], value: 68 },
-      { name: "Snap.svg", target: [], value: 16 },
-      { name: "d3",  target: [], value: 25 },
-      { name: "Gulp", target: [], value: 45 },
-      { name: "Angular", target: [], value: 25 },
-      { name: "Adobe CS", target: [], value: 57 },
-      { name: "mySql", target: [], value: 20 },
-      { name: "Grunt", target: [], value: 37 },
+      { name: "Food", target: [], value: 58 },
+      { name: "Accomodation", target: [], value: 125 },  
+      { name: "Travel", target: [], value: 52 },
+      { name: "Bills", target: [], value: 48 }, 
+      { name: "Books", target: [], value: 40 }, 
+      { name: "Sports", target: [], value: 36 },
+      { name: "Going Out", target: [], value: 52 },
+      { name: "Gifts", target: [], value: 37 },
+      { name: "Other", target: [], value: 20 },
+      { name: "Cinema", target: [], value: 36 },
+      { name: "Car",  target: [], value: 25 },
+      { name: "Clothes", target: [], value: 25 },
 ];
 
 
 
 var button = document.createElement("button");
-button.innerHTML = "add circle!";
+document.body.style.backgroundColor = "black";
+button.innerHTML = "add category!";
 
 button.addEventListener("click", function() {
   nodes.forEach( function (arrayItem)
@@ -56,12 +53,15 @@ button.addEventListener("click", function() {
     delete arrayItem.px;
     delete arrayItem.py;
   });
-  nodes.push({ name: "JOHN CENNA", target: [], value: 58 });
-  button.innerHTML = JSON.stringify(nodes);
+  nodes.push({ name: "Hackathons", target: [], value: 58 });
   update();
-
+  button.innerHTML = "add another category!";
 });
 
+function increase(nod){
+	nod.value+=10;
+	update();
+}
 document.body.appendChild(button);
 
 var links = [];
@@ -103,7 +103,6 @@ var force = d3.layout.force()
 
 var update = function () { 
 
-	  d3.select("div").remove();
 	  d3.select("svg").remove();
 	  myChart = d3.select('body')
       .append("div")
@@ -173,9 +172,17 @@ var update = function () {
                   } else {
                         return '1.5em';    
                   }
-            }) 
+            })
+            .on("click", function(d){
+            	for (var i in nodes) {
+     				if (nodes[i].name == d.name) {
+        			projects[i].value = 200;
+        			break; //Stop this loop, we found it!
+     			}
+   			}
+            	update()
+            })
           force
 	      .start();
         }
 
-update();
