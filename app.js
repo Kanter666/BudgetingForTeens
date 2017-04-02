@@ -1,5 +1,6 @@
 var auth = new Firebase('https://teenbudget-75e27.firebaseio.com');
 var count = 0;
+var login = false;
 
 function saveToList(){	// as the user presses the enter key, we will attempt to save the data
 	var userName = document.getElementById("user").value.trim();
@@ -14,7 +15,11 @@ function saveToList(){	// as the user presses the enter key, we will attempt to 
 				})
 			}
 		})
+		if (login == true){
+		login(userName, passWord);
+	}else{
 		saveToFB(userName, passWord);
+	}
 
 	} else {
 		window.alert("Are you retarded?");
@@ -23,7 +28,19 @@ function saveToList(){	// as the user presses the enter key, we will attempt to 
 	document.getElementById("pass").value = "";
 	document.getElementById("name").value = "";
 }
- 
+
+function login(email, password){
+	firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
+		window.location.href = "file:///Users/SagarJaiswal/Desktop/myFirebaseapp/jsFire/app1.html";
+	}, function(error){
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		if (errorMessage){
+			alert("Some login issue fam")
+		}
+
+	})	
+}
 function saveToFB(userName, passWord){
     // this will save data to Firebase
     firebase.auth().createUserWithEmailAndPassword(userName, passWord).then(function() {
