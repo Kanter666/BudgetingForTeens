@@ -14,3 +14,15 @@ body {
     bottom: 0;
     width: 100%;
 }
+
+h3{
+    height:50px;
+    background:#F0F0F0;
+    border:1px solid #FFFFFF;
+    text-align: center;
+    margin-left: 100px;
+    border-radius: 25px;
+    padding-top: 10px;
+    width:960px;
+    margin-left:10px auto;
+}

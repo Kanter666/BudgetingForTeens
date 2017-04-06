@@ -4,10 +4,27 @@ function registerWindow(){
 }
 
 function login(){
+	var button = document.createElement("button");
+	document.body.style.backgroundColor = "black";
+	button.innerHTML = "add category!";
+button.addEventListener("click", function() {
+  nodes.forEach( function (arrayItem)
+  {
+    delete arrayItem.x;
+    delete arrayItem.y;
+    delete arrayItem.px;
+    delete arrayItem.py;
+  });
+  nodes.push({ name: "Hackathons", target: [], value: 58 });
+  update();
+  button.innerHTML = "add another category!";
+});
+	document.body.appendChild(button);
 	loginBar = document.getElementById("navbar");
 	loginBar.remove();
+	document.getElementById("delet").remove();
 	document.getElementById("welcome").style.display="block";
-	update();
+	update()
 }
 
 var   w = screen.availWidth,
@@ -25,44 +42,24 @@ var palette = {
 var colors = d3.scale.category20();
 
 var nodes = [
-      { name: "Food", target: [], value: 58 },
-      { name: "Accomodation", target: [], value: 125 },  
       { name: "Travel", target: [], value: 52 },
+      { name: "Accomodation", target: [], value: 125 },  
       { name: "Bills", target: [], value: 48 }, 
+      { name: "Food", target: [], value: 58 },
       { name: "Books", target: [], value: 40 }, 
       { name: "Sports", target: [], value: 36 },
       { name: "Going Out", target: [], value: 52 },
       { name: "Gifts", target: [], value: 37 },
-      { name: "Other", target: [], value: 20 },
+      { name: "ET", target: [], value: 20 },
       { name: "Cinema", target: [], value: 36 },
       { name: "Car",  target: [], value: 25 },
-      { name: "Clothes", target: [], value: 25 },
+      { name: "Cloth", target: [], value: 25 },
 ];
-
-
-
-var button = document.createElement("button");
-document.body.style.backgroundColor = "black";
-button.innerHTML = "add category!";
-
-button.addEventListener("click", function() {
-  nodes.forEach( function (arrayItem)
-  {
-    delete arrayItem.x;
-    delete arrayItem.y;
-    delete arrayItem.px;
-    delete arrayItem.py;
-  });
-  nodes.push({ name: "Hackathons", target: [], value: 58 });
-  update();
-  button.innerHTML = "add another category!";
-});
 
 function increase(nod){
 	nod.value+=10;
 	update();
 }
-document.body.appendChild(button);
 
 var links = [];
 
@@ -139,10 +136,19 @@ var update = function () {
                   }
             })
             .attr('fill', function(d,i){
-                  if ( i > 0 ) {
+
+                  if ( d.value < 20 ) {
                         return colors(i);
-                  } else {
-                        return '#fff';
+                  } else if(d.value<30){
+                        return '#FF0000';
+                  } else if(d.value<40){
+                        return '#D00000';
+                  } else if(d.value<50){
+                        return '#A80000';
+                  } else if(d.value<60){
+                        return '#880000';
+                  } else{
+                        return '#400000';
                   }
             })
 
@@ -151,7 +157,7 @@ var update = function () {
 
 
       node.append('text')
-            .text(function(d){ return d.name; })
+            .text(function(d){ return d.name+"-"+d.value; })
             .attr('font-family', 'Raleway', 'Helvetica Neue, Helvetica')
             .attr('fill', function(d, i){
               console.log(d.value);
